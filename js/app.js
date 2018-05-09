@@ -35,15 +35,16 @@ class Player {
     update(){};
     render(){};
     handleInput(){};
-
-
 }
-let player = new Player(305, 500);
+
+Player.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
-//let enemy = new Enemy(0, 60);
-const positionY = [60, 140, 220];
+
+const positionY = [60, 143, 226];
 let randomPosition = positionY[Math.floor(Math.random()*positionY.length)];
 
 let enemy = new Enemy(0, randomPosition);
@@ -53,7 +54,7 @@ const allEnemies = [];
 allEnemies.push(enemy);
 
 // Place the player object in a variable called player
-
+let player = new Player(205, 400);
 
 
 // This listens for key presses and sends the keys to your
