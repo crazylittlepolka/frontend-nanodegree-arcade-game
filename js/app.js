@@ -38,13 +38,20 @@ class Player {
 
 
 }
-let player = new Player();
+let player = new Player(305, 500);
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
-var enemy = new Enemy();
-var allEnemies = [];
+//let enemy = new Enemy(0, 60);
+const positionY = [60, 140, 220];
+let randomPosition = positionY[Math.floor(Math.random()*positionY.length)];
+
+let enemy = new Enemy(0, randomPosition);
+
+
+const allEnemies = [];
 allEnemies.push(enemy);
+
 // Place the player object in a variable called player
 
 
