@@ -13,7 +13,7 @@ var Enemy = function(x,y) {
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 
-const speed = [40, 50, 65];
+const speed = [50, 60, 70];
 let randomSpeed = speed[Math.floor(Math.random()*speed.length)];
 
 Enemy.prototype.update = function(dt) {
@@ -46,6 +46,29 @@ Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+
+Player.prototype.update = function(dt) {
+};
+
+Player.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+Player.prototype.handleInput = function(move){
+   if(move === 'left' && this.x >= 100){
+       this.x -= 100;
+       }
+       if(move === 'up' && this.y >= 30){
+       this.y -= 82.5;
+       }
+       if(move === 'right' && this.x <= 305){
+       this.x += 100;
+       }
+       if(move === 'down' && this.y <= 350){
+       this.y += 82.5;
+       }
+};
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 
@@ -55,11 +78,13 @@ let randomPosition = positionY[Math.floor(Math.random()*positionY.length)];
 let enemy = new Enemy(0, randomPosition);
 
 
+
 const allEnemies = [];
 allEnemies.push(enemy);
 
 // Place the player object in a variable called player
 let player = new Player(205, 400);
+
 
 
 // This listens for key presses and sends the keys to your
