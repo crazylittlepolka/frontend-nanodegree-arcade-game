@@ -9,6 +9,8 @@ var Enemy = function(x,y,speed) {
     this.y = y;
     this.sprite = 'images/enemy-bug.png';
     this.speed = speed;
+    this.width = 101;
+    this.height = 171;
 };
 
 // Update the enemy's position, required method for game
@@ -41,10 +43,13 @@ class Player {
         this.x = x;
         this.y = y;
         this.sprite = 'images/char-boy.png';
+        this.width = 101;
+        this.height = 171;
     }
     update(){};
     render(){};
     handleInput(){};
+    collisionDetector(){};
 }
 
 Player.prototype.render = function() {
@@ -75,12 +80,12 @@ Player.prototype.handleInput = function(move){
 };
 
 // Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
 
 let enemy1 = new Enemy(-100, 60, 100);
 let enemy2 = new Enemy(0, 143, 50);
 let enemy3 = new Enemy(-100, 226, 80);
 
+// Place all enemy objects in an array called allEnemies
 
 const allEnemies = [];
 allEnemies.push(enemy1, enemy2, enemy3);
@@ -89,6 +94,18 @@ allEnemies.push(enemy1, enemy2, enemy3);
 // Place the player object in a variable called player
 let player = new Player(205, 400);
 
+//collision detector from https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
+
+Player.prototype.collisionDetector= function(){
+  for(let i = 0;i< allEnemies.length; i++){
+  if(this.x < allEnemies[i].x + allEnemies[i].width &&
+   this.x + player.width > allEnemies[i].x &&
+   this.y < allEnemies[i].y + allEnemies[i].height &&
+   this.height + this.y > allEnemies[i].y){
+     alert('ups');
+   }
+  }
+}
 
 
 // This listens for key presses and sends the keys to your
