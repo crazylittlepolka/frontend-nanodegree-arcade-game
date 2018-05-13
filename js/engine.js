@@ -9,7 +9,7 @@
  * drawn but that is not the case. What's really happening is the entire "scene"
  * is being drawn over and over, presenting the illusion of animation.
  *
- * This engine makes the canvas' context (ctx) object globally available to make 
+ * This engine makes the canvas' context (ctx) object globally available to make
  * writing app.js a little simpler to work with.
  */
 
@@ -94,6 +94,10 @@ var Engine = (function(global) {
             enemy.update(dt);
         });
         player.update();
+
+        allStars.forEach(function(star) {
+            star.update();
+          });
     }
 
     /* This function initially draws the "game level", it will then call
@@ -117,7 +121,7 @@ var Engine = (function(global) {
             numRows = 6,
             numCols = 5,
             row, col;
-        
+
         // Before drawing, clear existing canvas
         ctx.clearRect(0,0,canvas.width,canvas.height)
 
@@ -154,8 +158,11 @@ var Engine = (function(global) {
         });
 
         player.render();
-    }
 
+        allStars.forEach(function(star) {
+            star.render();
+          });
+        }
     /* This function does nothing but it could have been a good place to
      * handle game reset states - maybe a new game menu or a game over screen
      * those sorts of things. It's only called once by the init() method.
@@ -173,7 +180,8 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
+        'images/star.png'
     ]);
     Resources.onReady(init);
 

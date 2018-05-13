@@ -18,7 +18,7 @@ var Enemy = function(x,y,speed) {
       if(player.x < this.x + this.width/2 &&
        player.x + player.width/2 > this.x &&
        player.y < this.y + this.height/2 &&
-       player.height/2 + player.y > this.y){
+       player.height/3 + player.y > this.y){
          return true;
        }else {
          return false;
@@ -39,7 +39,7 @@ Enemy.prototype.update = function(dt) {
       this.x = -100;
     }
     if(this.intersects(player)) {
-      console.log("bang!");
+      document.location.reload(true);
     }
 };
 
@@ -89,20 +89,63 @@ Player.prototype.handleInput = function(move){
        }
 };
 
+//class for for incentives - stars and gems
+class Stars {
+  constructor(x, y, sprite) {
+    this.x = x;
+    this.y = y;
+    this.sprite = sprite;
+    this.width = 101;
+    this.height = 171;
+    this.status = 1;
+  }
+  update(){};
+  render(){};
+  intersects(player) {
+    if(player.x < this.x + this.width/2 &&
+     player.x + player.width/2 > this.x &&
+     player.y < this.y + this.height/3 &&
+     player.height/3 + player.y > this.y){
+       return true;
+     }else {
+       return false;
+     }
+    }
+}
+
+Stars.prototype.update = function() {
+  if(this.intersects(player)) {
+    console.log('a star!')
+    
+  }
+};
+
+Stars.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
 // Now instantiate your objects.
 
-let enemy1 = new Enemy(-100, 60, 100);
-let enemy2 = new Enemy(0, 143, 50);
+let enemy1 = new Enemy(-150, 60, 105);
+let enemy2 = new Enemy(0, 143, 60);
 let enemy3 = new Enemy(-100, 226, 80);
+let enemy4 = new Enemy(-300, 143, 75)
 
 // Place all enemy objects in an array called allEnemies
 
 const allEnemies = [];
-allEnemies.push(enemy1, enemy2, enemy3);
+allEnemies.push(enemy1, enemy2, enemy3, enemy4);
 
 
 // Place the player object in a variable called player
 let player = new Player(205, 400);
+
+let star1 = new Stars (0, 236, 'images/star.png');
+let star2 = new Stars (305, 73, 'images/star.png');
+let star3 = new Stars (400, 236, 'images/star.png');
+
+const allStars = [];
+allStars.push(star1, star2, star3);
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
