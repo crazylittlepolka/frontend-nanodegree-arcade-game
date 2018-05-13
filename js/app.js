@@ -15,10 +15,10 @@ var Enemy = function(x,y,speed) {
     //from https://www.youtube.com/watch?v=uAfw-ko3kB8
     //and from from https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
     this.intersects = function(player) {
-      if(player.x < this.x + this.width &&
-       player.x + player.width > this.x &&
-       player.y < this.y + this.height &&
-       player.height + player.y > this.y){
+      if(player.x < this.x + this.width/2 &&
+       player.x + player.width/2 > this.x &&
+       player.y < this.y + this.height/2 &&
+       player.height/2 + player.y > this.y){
          return true;
        }else {
          return false;
@@ -28,8 +28,6 @@ var Enemy = function(x,y,speed) {
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
-
-
 
 Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
@@ -41,7 +39,7 @@ Enemy.prototype.update = function(dt) {
       this.x = -100;
     }
     if(this.intersects(player)) {
-      alert ('ups');
+      console.log("bang!");
     }
 };
 
@@ -67,6 +65,9 @@ class Player {
   }
 
 Player.prototype.update = function(dt) {
+  if (player.y === -15){
+    document.location.reload(true);
+  };
 };
 
 Player.prototype.render = function() {
