@@ -11,6 +11,19 @@ var Enemy = function(x,y,speed) {
     this.speed = speed;
     this.width = 101;
     this.height = 171;
+
+    //from https://www.youtube.com/watch?v=uAfw-ko3kB8
+    //and from from https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
+    this.intersects = function(player) {
+      if(player.x < this.x + this.width &&
+       player.x + player.width > this.x &&
+       player.y < this.y + this.height &&
+       player.height + player.y > this.y){
+         return true;
+       }else {
+         return false;
+       }
+      }
 };
 
 // Update the enemy's position, required method for game
@@ -27,7 +40,9 @@ Enemy.prototype.update = function(dt) {
     if (this.x > 500){
       this.x = -100;
     }
-
+    if(this.intersects(player)) {
+      alert ('ups');
+    }
 };
 
 // Draw the enemy on the screen, required method for game
@@ -49,13 +64,7 @@ class Player {
     update(){};
     render(){};
     handleInput(){};
-    collisionDetector(){};
-}
-
-Player.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
-
+  }
 
 Player.prototype.update = function(dt) {
 };
@@ -93,20 +102,6 @@ allEnemies.push(enemy1, enemy2, enemy3);
 
 // Place the player object in a variable called player
 let player = new Player(205, 400);
-
-//collision detector from https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
-
-Player.prototype.collisionDetector= function(){
-  for(let i = 0;i< allEnemies.length; i++){
-  if(this.x < allEnemies[i].x + allEnemies[i].width &&
-   this.x + player.width > allEnemies[i].x &&
-   this.y < allEnemies[i].y + allEnemies[i].height &&
-   this.height + this.y > allEnemies[i].y){
-     alert('ups');
-   }
-  }
-}
-
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
