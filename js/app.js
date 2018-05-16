@@ -105,31 +105,28 @@ allEnemies.push(enemy1, enemy2, enemy3, enemy4);
 // Place the player object in a variable called player
 let player = new Player(205, 400);
 
+//score counter variable
 let result = 0;
+
 // drawing a score
 class Score {
   constructor(result) {
   this.x = 0;
   this.y = 25;
   this.text = "Score: ";
-
-
   }
   update(){};
   render(){};
 }
 
 Score.prototype.update = function(){
-
-if (result === 3){
-  console.log("Winner");
-}
 };
 
 Score.prototype.render = function() {
   ctx.font = '24px sans-serif';
   ctx.fillText(this.text + result, this.x, this.y);
 };
+
 let score = new Score();
 
 //class for incentives - stars
@@ -177,29 +174,25 @@ const allStars = [];
 allStars.push(star1, star2, star3);
 
 //Game over pop-up window
-let popUp = function () {
-  this.x = 50;
-  this.y = 50;
-  //this.visibility ='hidden';
+let PopUp = function () {
+  this.x = -1000;
+  this.y = -1000;
+  this.visibility ='hidden';
   this.sprite = 'images/pop-up.png';
-  //this.width = 300;
-  //this.height = 300;
-  //this.fillStyle = 'white';
-  //this.text = "You collected 3 stars. You are winner";
 }
 
-popUp.update = function() {
+PopUp.prototype.update = function() {
   if(result === 3){
-    this.visibility = 'visible';
+    this.x = 0;
+    this.y = 65;
   }
-  //this.addEventListener('click', document.location.reload(true));
 };
 
-popUp.render = function(){
+PopUp.prototype.render = function(){
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-  //ctx.font = '24px sans-serif';
-  //ctx.fillText(this.text, this.x, this.y);
 };
+
+let popUp = new PopUp();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
