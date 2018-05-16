@@ -24,6 +24,7 @@ var Engine = (function(global) {
         ctx = canvas.getContext('2d'),
         lastTime;
 
+
     canvas.width = 505;
     canvas.height = 606;
     doc.body.appendChild(canvas);
@@ -94,10 +95,15 @@ var Engine = (function(global) {
             enemy.update(dt);
         });
         player.update();
-
+        //
         allStars.forEach(function(star) {
             star.update();
           });
+
+        score.update();
+        popUp.update();
+
+          //
     }
 
     /* This function initially draws the "game level", it will then call
@@ -158,10 +164,14 @@ var Engine = (function(global) {
         });
 
         player.render();
-
+        //
         allStars.forEach(function(star) {
             star.render();
           });
+
+          score.render();
+          popUp.render();
+          //
         }
     /* This function does nothing but it could have been a good place to
      * handle game reset states - maybe a new game menu or a game over screen
@@ -181,7 +191,8 @@ var Engine = (function(global) {
         'images/grass-block.png',
         'images/enemy-bug.png',
         'images/char-boy.png',
-        'images/star.png'
+        'images/star.png',
+        'images/pop-up.png'
     ]);
     Resources.onReady(init);
 

@@ -1,5 +1,5 @@
 // Enemies our player must avoid
-var Enemy = function(x,y,speed) {
+let Enemy = function(x,y,speed) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
@@ -89,41 +89,6 @@ Player.prototype.handleInput = function(move){
        }
 };
 
-//class for for incentives - stars and gems
-class Stars {
-  constructor(x, y, sprite) {
-    this.x = x;
-    this.y = y;
-    this.sprite = sprite;
-    this.width = 101;
-    this.height = 171;
-    this.status = 1;
-  }
-  update(){};
-  render(){};
-  intersects(player) {
-    if(player.x < this.x + this.width/2 &&
-     player.x + player.width/2 > this.x &&
-     player.y < this.y + this.height/3 &&
-     player.height/3 + player.y > this.y){
-       return true;
-     }else {
-       return false;
-     }
-    }
-}
-
-Stars.prototype.update = function() {
-  if(this.intersects(player)) {
-    console.log('a star!')
-    
-  }
-};
-
-Stars.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
-
 // Now instantiate your objects.
 
 let enemy1 = new Enemy(-150, 60, 105);
@@ -140,12 +105,101 @@ allEnemies.push(enemy1, enemy2, enemy3, enemy4);
 // Place the player object in a variable called player
 let player = new Player(205, 400);
 
+let result = 0;
+// drawing a score
+class Score {
+  constructor(result) {
+  this.x = 0;
+  this.y = 25;
+  this.text = "Score: ";
+
+
+  }
+  update(){};
+  render(){};
+}
+
+Score.prototype.update = function(){
+
+if (result === 3){
+  console.log("Winner");
+}
+};
+
+Score.prototype.render = function() {
+  ctx.font = '24px sans-serif';
+  ctx.fillText(this.text + result, this.x, this.y);
+};
+let score = new Score();
+
+//class for incentives - stars
+class Stars {
+  constructor(x, y, sprite) {
+    this.x = x;
+    this.y = y;
+    this.sprite = sprite;
+    this.width = 101;
+    this.height = 171;
+  }
+  update(){};
+  render(){};
+  intersects(player) {
+    if(player.x < this.x + this.width/2 &&
+     player.x + player.width/2 > this.x &&
+     player.y < this.y + this.height/3 &&
+     player.height/3 + player.y > this.y){
+       return true;
+
+     }else {
+       return false;
+     }
+    }
+}
+
+Stars.prototype.update = function() {
+  if(this.intersects(player)) {
+    //star disappears
+    this.x = -100;
+    this.y = -100;
+    result ++;
+  }
+};
+
+Stars.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
 let star1 = new Stars (0, 236, 'images/star.png');
 let star2 = new Stars (305, 73, 'images/star.png');
 let star3 = new Stars (400, 236, 'images/star.png');
 
 const allStars = [];
 allStars.push(star1, star2, star3);
+
+//Game over pop-up window
+let popUp = function () {
+  this.x = 50;
+  this.y = 50;
+  //this.visibility ='hidden';
+  this.sprite = 'images/pop-up.png';
+  //this.width = 300;
+  //this.height = 300;
+  //this.fillStyle = 'white';
+  //this.text = "You collected 3 stars. You are winner";
+}
+
+popUp.update = function() {
+  if(result === 3){
+    this.visibility = 'visible';
+  }
+  //this.addEventListener('click', document.location.reload(true));
+};
+
+popUp.render = function(){
+  ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+  //ctx.font = '24px sans-serif';
+  //ctx.fillText(this.text, this.x, this.y);
+};
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
