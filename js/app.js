@@ -63,8 +63,9 @@ class Player {
     render(){};
     handleInput(){};
   }
-
+//update player position
 Player.prototype.update = function(dt) {
+  //if player reaches water game reloads
   if (player.y === -15){
     document.location.reload(true);
   };
@@ -74,6 +75,7 @@ Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+//player moves with keys
 Player.prototype.handleInput = function(move){
    if(move === 'left' && this.x >= 100){
        this.x -= 100;
@@ -122,6 +124,7 @@ class Score {
 Score.prototype.update = function(){
 };
 
+//draws score counter
 Score.prototype.render = function() {
   ctx.font = '24px sans-serif';
   ctx.fillText(this.text + result, this.x, this.y);
@@ -140,6 +143,7 @@ class Stars {
   }
   update(){};
   render(){};
+  //when player collides with stars
   intersects(player) {
     if(player.x < this.x + this.width/2 &&
      player.x + player.width/2 > this.x &&
@@ -153,19 +157,22 @@ class Stars {
     }
 }
 
+//stars update
 Stars.prototype.update = function() {
   if(this.intersects(player)) {
-    //star disappears
+    //star disappears, score increases by 1
     this.x = -100;
     this.y = -100;
     result ++;
   }
 };
 
+//draws stars
 Stars.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+//three stars created
 let star1 = new Stars (0, 236, 'images/star.png');
 let star2 = new Stars (305, 73, 'images/star.png');
 let star3 = new Stars (400, 236, 'images/star.png');
@@ -177,10 +184,10 @@ allStars.push(star1, star2, star3);
 let PopUp = function () {
   this.x = -1000;
   this.y = -1000;
-  this.visibility ='hidden';
   this.sprite = 'images/pop-up.png';
 }
 
+//pop-up window updtes, it appears when score is 3 - three stars collected
 PopUp.prototype.update = function() {
   if(result === 3){
     this.x = 0;
@@ -188,6 +195,7 @@ PopUp.prototype.update = function() {
   }
 };
 
+//draw pop-up window
 PopUp.prototype.render = function(){
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };

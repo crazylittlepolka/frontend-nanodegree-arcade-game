@@ -8,6 +8,9 @@ For detailed instructions on how to get started, check out this [guide](https://
 ## About
 This is a simple arcade-game. The task is to collect stars and avoid bug-enemies. You win when all three stars are colleted.
 
+##How to run the game
+To run the game - open index.html file in a browser.
+
 ##Game instructions
 1. The player moves with up-down-right-left keys.
 2. The player is to move in order to collected all three stars. The number of collected stars is dispalyed in Score counter.
